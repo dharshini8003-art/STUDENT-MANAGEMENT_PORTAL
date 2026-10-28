@@ -1,0 +1,372 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #1e293b;
+}
+
+/* ================= LAYOUT ================= */
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #1e293b;
+    color: white;
+}
+
+.brand {
+    height: 70px;
+    background: #2563eb;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 25px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.brand i {
+    font-size: 24px;
+}
+
+.menu {
+    list-style: none;
+    padding: 20px 10px;
+}
+
+.menu li {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 15px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.menu li:hover {
+    background: #334155;
+}
+
+.menu li.active {
+    background: #2563eb;
+}
+
+.menu li i {
+    width: 20px;
+    text-align: center;
+}
+
+/* ================= LOGOUT ================= */
+
+.logout {
+    position: absolute;
+    bottom: 20px;
+    left: 15px;
+    right: 15px;
+    padding: 13px 15px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.logout:hover {
+    background: #334155;
+}
+
+/* ================= MAIN ================= */
+
+.main-content {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+    min-height: 100vh;
+}
+
+/* ================= TOPBAR ================= */
+
+.topbar {
+    height: 90px;
+    background: white;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 35px;
+}
+
+.topbar h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.topbar p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.admin-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-weight: 600;
+}
+
+.admin-profile i {
+    color: #2563eb;
+    font-size: 28px;
+}
+
+/* ================= FORM CARD ================= */
+
+.form-card {
+    background: white;
+
+    margin: 30px 35px;
+    padding: 25px;
+
+    border-radius: 10px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+}
+
+.form-card h3 {
+    font-size: 19px;
+    margin-bottom: 25px;
+}
+
+.form-card h3 i {
+    color: #2563eb;
+    margin-right: 8px;
+}
+
+/* ================= FORM GRID ================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 25px;
+
+    margin-bottom: 25px;
+}
+
+.form-grid label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #475569;
+}
+
+.form-grid input {
+    width: 100%;
+    height: 43px;
+
+    padding: 0 12px;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+.form-grid input:focus {
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+/* ================= BUTTON ================= */
+
+.primary-btn {
+    background: #2563eb;
+    color: white;
+
+    border: none;
+    border-radius: 6px;
+
+    padding: 12px 20px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.primary-btn:hover {
+    background: #1d4ed8;
+}
+
+.primary-btn i {
+    margin-right: 7px;
+}
+
+/* ================= TABLE CARD ================= */
+
+.table-card {
+    background: white;
+
+    margin: 0 35px 30px;
+    padding: 25px;
+
+    border-radius: 10px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+}
+
+.table-header {
+    margin-bottom: 25px;
+}
+
+.table-header h3 {
+    font-size: 19px;
+}
+
+.table-header h3 i {
+    color: #2563eb;
+    margin-right: 8px;
+}
+
+/* ================= FACULTY INFO ================= */
+
+.faculty-info {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.info-box {
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 8px;
+
+    padding: 25px;
+
+    text-align: center;
+}
+
+.info-box > i {
+    color: #2563eb;
+
+    font-size: 32px;
+
+    margin-bottom: 15px;
+}
+
+.info-box h4 {
+    font-size: 16px;
+
+    margin-bottom: 10px;
+}
+
+.info-box p {
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+    }
+
+    .faculty-info {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        width: 70px;
+    }
+
+    .brand {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .brand span {
+        display: none;
+    }
+
+    .menu li {
+        justify-content: center;
+        font-size: 0;
+    }
+
+    .menu li i {
+        font-size: 16px;
+    }
+
+    .logout {
+        justify-content: center;
+        font-size: 0;
+    }
+
+    .logout i {
+        font-size: 16px;
+    }
+
+    .main-content {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+    }
+
+    .topbar {
+        padding: 0 20px;
+    }
+
+    .form-card,
+    .table-card {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}

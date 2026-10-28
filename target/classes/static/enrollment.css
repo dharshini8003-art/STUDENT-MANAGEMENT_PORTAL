@@ -1,0 +1,418 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #333;
+}
+
+
+/* =========================
+   MAIN LAYOUT
+========================= */
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    width: 240px;
+    min-height: 100vh;
+    background: #1e293b;
+    color: white;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.brand {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 25px;
+    background: #2563eb;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.brand i {
+    font-size: 25px;
+}
+
+.menu {
+    list-style: none;
+    padding: 20px 10px;
+}
+
+.menu li {
+    padding: 14px 18px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    font-size: 15px;
+}
+
+.menu li:hover {
+    background: #334155;
+}
+
+.menu li.active {
+    background: #2563eb;
+}
+
+.menu li i {
+    width: 20px;
+    text-align: center;
+}
+
+.logout {
+    position: absolute;
+    bottom: 25px;
+    left: 20px;
+    right: 20px;
+    padding: 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.logout:hover {
+    background: #334155;
+}
+
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.main-content {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+    min-height: 100vh;
+}
+
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar {
+    height: 90px;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 35px;
+}
+
+.topbar h2 {
+    font-size: 24px;
+    color: #1e293b;
+    margin-bottom: 5px;
+}
+
+.topbar p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.admin-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #334155;
+    font-weight: bold;
+}
+
+.admin-profile i {
+    font-size: 30px;
+    color: #2563eb;
+}
+
+
+/* =========================
+   FORM CARD
+========================= */
+
+.form-card {
+    background: white;
+    margin: 30px 35px;
+    padding: 25px;
+    border-radius: 10px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.form-card h3 {
+    color: #1e293b;
+    margin-bottom: 25px;
+    font-size: 19px;
+}
+
+.form-card h3 i {
+    color: #2563eb;
+    margin-right: 8px;
+}
+
+
+/* =========================
+   FORM GRID
+========================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.form-grid label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #475569;
+    font-size: 14px;
+}
+
+.form-grid input {
+    width: 100%;
+    padding: 12px;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+
+    font-size: 14px;
+    outline: none;
+}
+
+.form-grid input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+
+/* =========================
+   PRIMARY BUTTON
+========================= */
+
+.primary-btn {
+    background: #2563eb;
+    color: white;
+
+    border: none;
+    border-radius: 6px;
+
+    padding: 12px 20px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.primary-btn:hover {
+    background: #1d4ed8;
+}
+
+.primary-btn i {
+    margin-right: 7px;
+}
+
+
+/* =========================
+   TABLE CARD
+========================= */
+
+.table-card {
+    background: white;
+    margin: 0 35px 30px;
+    padding: 25px;
+
+    border-radius: 10px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================
+   TABLE HEADER
+========================= */
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.table-header h3 {
+    color: #1e293b;
+    font-size: 19px;
+}
+
+.table-header h3 i {
+    color: #2563eb;
+    margin-right: 8px;
+}
+
+
+/* =========================
+   REFRESH BUTTON
+========================= */
+
+.refresh-btn {
+    background: #f1f5f9;
+    color: #334155;
+
+    border: 1px solid #cbd5e1;
+
+    padding: 9px 15px;
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+.refresh-btn:hover {
+    background: #e2e8f0;
+}
+
+.refresh-btn i {
+    margin-right: 5px;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #2563eb;
+    color: white;
+}
+
+th {
+    padding: 14px;
+    text-align: left;
+    font-size: 14px;
+}
+
+td {
+    padding: 14px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+tbody tr:hover {
+    background: #f8fafc;
+}
+
+
+/* =========================
+   DELETE BUTTON
+========================= */
+
+.delete-btn {
+    background: #ef4444;
+    color: white;
+
+    border: none;
+    border-radius: 5px;
+
+    padding: 7px 12px;
+
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #dc2626;
+}
+
+.delete-btn i {
+    margin-right: 5px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        width: 70px;
+    }
+
+    .brand span,
+    .menu li:not(.active)::after,
+    .logout {
+        display: none;
+    }
+
+    .brand {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .menu li {
+        justify-content: center;
+        padding: 15px 5px;
+    }
+
+    .menu li i {
+        margin: 0;
+    }
+
+    .main-content {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+    }
+
+    .topbar {
+        padding: 0 20px;
+    }
+
+    .form-card,
+    .table-card {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Faculty Dashboard - Student Management System</title>
+
+    <link rel="stylesheet" href="faculty.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>Student MS</span>
+        </div>
+
+        <ul class="menu">
+
+            <li class="active">
+                <i class="fa-solid fa-chart-line"></i>
+                Dashboard
+            </li>
+
+            <li onclick="openPage('student.html')">
+                <i class="fa-solid fa-user-graduate"></i>
+                Students
+            </li>
+
+            <li onclick="openPage('course.html')">
+                <i class="fa-solid fa-book"></i>
+                Courses
+            </li>
+
+            <li onclick="openPage('enrollment.html')">
+                <i class="fa-solid fa-user-plus"></i>
+                Course Enrollment
+            </li>
+
+            <li onclick="openPage('attendance.html')">
+                <i class="fa-solid fa-calendar-check"></i>
+                Attendance
+            </li>
+
+            <li onclick="openPage('marks.html')">
+                <i class="fa-solid fa-square-poll-vertical"></i>
+                Marks
+            </li>
+
+            <li onclick="openPage('report.html')">
+                <i class="fa-solid fa-file-lines"></i>
+                Reports
+            </li>
+
+        </ul>
+
+        <div class="logout" onclick="logout()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                <h2>Faculty Dashboard</h2>
+                <p>Manage student academic information</p>
+            </div>
+
+            <div class="admin-profile">
+                <i class="fa-solid fa-user-circle"></i>
+                Faculty
+            </div>
+
+        </header>
+
+
+        <!-- WELCOME SECTION -->
+        <section class="form-card">
+
+            <h3>
+                <i class="fa-solid fa-hand-wave"></i>
+                Welcome, Faculty!
+            </h3>
+
+            <p>
+                Use this dashboard to register students, manage courses,
+                record attendance, enter marks, and generate student reports.
+            </p>
+
+        </section>
+
+
+        <!-- DASHBOARD MODULES -->
+        <section class="faculty-info">
+
+            <div class="info-box"
+                 onclick="openPage('student.html')">
+
+                <i class="fa-solid fa-user-graduate"></i>
+
+                <h4>Student Management</h4>
+
+                <p>Add and manage student details.</p>
+
+                <button class="primary-btn">Manage Students</button>
+
+            </div>
+
+
+            <div class="info-box"
+                 onclick="openPage('course.html')">
+
+                <i class="fa-solid fa-book"></i>
+
+                <h4>Course Management</h4>
+
+                <p>Add and manage courses.</p>
+
+                <button class="primary-btn">Manage Courses</button>
+
+            </div>
+
+
+            <div class="info-box"
+                 onclick="openPage('enrollment.html')">
+
+                <i class="fa-solid fa-user-plus"></i>
+
+                <h4>Course Enrollment</h4>
+
+                <p>Enroll students using Student ID and Course ID.</p>
+
+                <button class="primary-btn">Enroll Student</button>
+
+            </div>
+
+
+            <div class="info-box"
+                 onclick="openPage('attendance.html')">
+
+                <i class="fa-solid fa-calendar-check"></i>
+
+                <h4>Attendance Management</h4>
+
+                <p>Record student attendance.</p>
+
+                <button class="primary-btn">Manage Attendance</button>
+
+            </div>
+
+
+            <div class="info-box"
+                 onclick="openPage('marks.html')">
+
+                <i class="fa-solid fa-square-poll-vertical"></i>
+
+                <h4>Marks Management</h4>
+
+                <p>Enter internal and external marks.</p>
+
+                <button class="primary-btn">Manage Marks</button>
+
+            </div>
+
+
+            <div class="info-box"
+                 onclick="openPage('report.html')">
+
+                <i class="fa-solid fa-file-lines"></i>
+
+                <h4>Student Reports</h4>
+
+                <p>View student academic reports.</p>
+
+                <button class="primary-btn">View Reports</button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    // PAGE NAVIGATION
+    function openPage(page) {
+        window.location.href = page;
+    }
+
+    // LOGOUT
+    async function logout() {
+
+        try {
+            await fetch("/logout", {
+                method: "POST",
+                credentials: "same-origin"
+            });
+        } catch (error) {
+            console.error("Logout request failed:", error);
+        }
+
+        window.location.replace("index.html");
+    }
+
+</script>
+
+</body>
+</html>

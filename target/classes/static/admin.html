@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="admin.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>SMS</span>
+        </div>
+
+
+        <ul class="menu">
+
+            <li class="active">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </li>
+
+            <li onclick="openPage('student.html')">
+                <i class="fa-solid fa-users"></i>
+                Students
+            </li>
+
+            <li onclick="openPage('faculty.html')">
+                <i class="fa-solid fa-user-tie"></i>
+                Faculty
+            </li>
+
+            <li onclick="openPage('course.html')">
+                <i class="fa-solid fa-book"></i>
+                Courses
+            </li>
+
+            <li onclick="openPage('enrollment.html')">
+                <i class="fa-solid fa-file-signature"></i>
+                Enrollments
+            </li>
+
+            <li onclick="openPage('attendance.html')">
+                <i class="fa-solid fa-calendar-check"></i>
+                Attendance
+            </li>
+
+            <li onclick="openPage('marks.html')">
+                <i class="fa-solid fa-square-poll-vertical"></i>
+                Marks
+            </li>
+
+            <li onclick="openPage('report.html')">
+                <i class="fa-solid fa-chart-column"></i>
+                Reports
+            </li>
+
+        </ul>
+
+
+        <!-- Logout -->
+
+        <div class="logout" onclick="logout()">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div class="menu-icon">
+
+                <i class="fa-solid fa-bars"></i>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <i class="fa-solid fa-circle-user"></i>
+
+                <span>Admin</span>
+
+                <i class="fa-solid fa-chevron-down"></i>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <section class="dashboard">
+
+            <h1>Welcome, Admin!</h1>
+
+            <p class="dashboard-text">
+                Manage your institution easily
+            </p>
+
+
+            <!-- DASHBOARD CARDS -->
+
+            <div class="dashboard-cards">
+
+
+                <!-- STUDENTS -->
+
+                <div class="dashboard-card blue">
+
+                    <div class="card-icon">
+
+                        <i class="fa-solid fa-users"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p>Students</p>
+
+                        <h2>25</h2>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FACULTY -->
+
+                <div class="dashboard-card green">
+
+                    <div class="card-icon">
+
+                        <i class="fa-solid fa-user-tie"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p>Faculty</p>
+
+                        <h2>5</h2>
+
+                    </div>
+
+                </div>
+
+
+                <!-- COURSES -->
+
+                <div class="dashboard-card orange">
+
+                    <div class="card-icon">
+
+                        <i class="fa-solid fa-book"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p>Courses</p>
+
+                        <h2>8</h2>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ENROLLMENTS -->
+
+                <div class="dashboard-card purple">
+
+                    <div class="card-icon">
+
+                        <i class="fa-solid fa-file-signature"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p>Enrollments</p>
+
+                        <h2>20</h2>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ATTENDANCE -->
+
+                <div class="dashboard-card cyan">
+
+                    <div class="card-icon">
+
+                        <i class="fa-solid fa-calendar-check"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p>Attendance</p>
+
+                        <h2>18</h2>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MARKS -->
+
+                <div class="dashboard-card pink">
+
+                    <div class="card-icon">
+
+                        <i class="fa-solid fa-square-poll-vertical"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p>Marks</p>
+
+                        <h2>18</h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUICK ACTIONS -->
+
+            <div class="quick-section">
+
+                <h2>Quick Actions</h2>
+
+
+                <div class="quick-actions">
+
+                    <button onclick="openPage('student.html')">
+
+                        <i class="fa-solid fa-user-plus"></i>
+
+                        Add Student
+
+                    </button>
+
+
+                    <button onclick="openPage('course.html')">
+
+                        <i class="fa-solid fa-book-medical"></i>
+
+                        Add Course
+
+                    </button>
+
+
+                    <button onclick="openPage('attendance.html')">
+
+                        <i class="fa-solid fa-calendar-check"></i>
+
+                        Attendance
+
+                    </button>
+
+
+                    <button onclick="openPage('marks.html')">
+
+                        <i class="fa-solid fa-pen"></i>
+
+                        Enter Marks
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function openPage(page) {
+
+        window.location.href = page;
+
+    }
+
+
+    function logout() {
+
+        window.location.href = "index.html";
+
+    }
+
+</script>
+
+</body>
+
+</html>

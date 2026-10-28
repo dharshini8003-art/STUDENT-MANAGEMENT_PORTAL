@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Management</title>
+
+    <link rel="stylesheet" href="student.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>SMS</span>
+        </div>
+
+        <ul class="menu">
+
+            <li onclick="openPage('faculty.html')">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </li>
+
+            <li class="active">
+                <i class="fa-solid fa-users"></i>
+                Students
+            </li>
+
+            <li onclick="openPage('faculty.html')">
+                <i class="fa-solid fa-user-tie"></i>
+                Faculty
+            </li>
+
+            <li onclick="openPage('course.html')">
+                <i class="fa-solid fa-book"></i>
+                Courses
+            </li>
+
+            <li onclick="openPage('enrollment.html')">
+                <i class="fa-solid fa-file-signature"></i>
+                Enrollments
+            </li>
+
+            <li onclick="openPage('attendance.html')">
+                <i class="fa-solid fa-calendar-check"></i>
+                Attendance
+            </li>
+
+            <li onclick="openPage('marks.html')">
+                <i class="fa-solid fa-square-poll-vertical"></i>
+                Marks
+            </li>
+
+            <li onclick="openPage('report.html')">
+                <i class="fa-solid fa-chart-column"></i>
+                Reports
+            </li>
+
+        </ul>
+
+        <div class="logout" onclick="logout()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="menu-icon">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <div class="admin-profile">
+
+                <i class="fa-solid fa-circle-user"></i>
+
+                <span>faculty</span>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= PAGE CONTENT ================= -->
+
+        <section class="dashboard">
+
+            <h1>Student Registration</h1>
+
+            <p class="dashboard-text">
+                Register and manage students
+            </p>
+
+
+            <!-- ================= REGISTRATION FORM ================= -->
+
+            <div class="form-card">
+
+                <h2>Register New Student</h2>
+
+                <br>
+
+                <div class="form-grid">
+
+                    <!-- STUDENT NAME -->
+
+                    <div>
+
+                        <label>Student Name</label>
+
+                        <input
+                                type="text"
+                                id="name"
+                                placeholder="Enter student name">
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div>
+
+                        <label>Email</label>
+
+                        <input
+                                type="email"
+                                id="email"
+                                placeholder="Enter email">
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div>
+
+                        <label>Phone</label>
+
+                        <input
+                                type="text"
+                                id="phone"
+                                placeholder="Enter phone number">
+
+                    </div>
+
+
+                    <!-- DEPARTMENT -->
+
+                    <div>
+
+                        <label>Department</label>
+
+                        <select id="department">
+
+                            <option value="">
+                                Select Department
+                            </option>
+
+                            <option value="IT">
+                                Information Technology
+                            </option>
+
+                            <option value="CSE">
+                                Computer Science
+                            </option>
+
+                            <option value="ECE">
+                                Electronics
+                            </option>
+
+                            <option value="BCA">
+                                BCA
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- YEAR -->
+
+                    <div>
+
+                        <label>Year</label>
+
+                        <select id="year">
+
+                            <option value="">
+                                Select Year
+                            </option>
+
+                            <option value="1">
+                                First Year
+                            </option>
+
+                            <option value="2">
+                                Second Year
+                            </option>
+
+                            <option value="3">
+                                Third Year
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REGISTER BUTTON -->
+
+                <button
+                        type="button"
+                        onclick="addStudent()">
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                    Register Student
+
+                </button>
+
+            </div>
+
+
+            <!-- ================= STUDENT LIST ================= -->
+
+            <div class="table-card">
+
+                <div class="table-header">
+
+                    <h2>Student List</h2>
+
+                    <button
+                            type="button"
+                            onclick="loadStudents()">
+
+                        <i class="fa-solid fa-rotate"></i>
+
+                        Refresh
+
+                    </button>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Name</th>
+
+                            <th>Email</th>
+
+                            <th>Phone</th>
+
+                            <th>Department</th>
+
+                            <th>Year</th>
+
+                        </tr>
+
+                        </thead>
+
+
+                        <tbody id="studentTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+    /* =========================================
+       SPRING BOOT API URL
+    ========================================= */
+
+    const API_URL = "http://localhost:8081/api/students";
+
+
+    /* =========================================
+       PAGE NAVIGATION
+    ========================================= */
+
+    function openPage(page) {
+
+        window.location.href = page;
+
+    }
+
+
+    /* =========================================
+       LOGOUT
+    ========================================= */
+
+    function logout() {
+
+        window.location.href = "index.html";
+
+    }
+
+
+    /* =========================================
+       ADD STUDENT
+    ========================================= */
+
+    function addStudent() {
+
+        console.log("Register button clicked");
+
+
+        /* Get form values */
+
+        const name =
+            document.getElementById("name").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const phone =
+            document.getElementById("phone").value.trim();
+
+        const department =
+            document.getElementById("department").value;
+
+        const year =
+            document.getElementById("year").value;
+
+
+        /* =========================================
+           VALIDATION
+        ========================================= */
+
+        if (name === "") {
+
+            alert("Please enter student name");
+
+            document.getElementById("name").focus();
+
+            return;
+        }
+
+
+        if (email === "") {
+
+            alert("Please enter email");
+
+            document.getElementById("email").focus();
+
+            return;
+        }
+
+
+        if (phone === "") {
+
+            alert("Please enter phone number");
+
+            document.getElementById("phone").focus();
+
+            return;
+        }
+
+
+        if (department === "") {
+
+            alert("Please select department");
+
+            document.getElementById("department").focus();
+
+            return;
+        }
+
+
+        if (year === "") {
+
+            alert("Please select year");
+
+            document.getElementById("year").focus();
+
+            return;
+        }
+
+
+        /* =========================================
+           CREATE STUDENT OBJECT
+        ========================================= */
+
+        const student = {
+
+            name: name,
+
+            email: email,
+
+            phone: phone,
+
+            department: department,
+
+            year: Number(year)
+
+        };
+
+
+        console.log("Student data:", student);
+
+
+        /* =========================================
+           SEND DATA TO SPRING BOOT
+        ========================================= */
+
+        fetch(API_URL, {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type": "application/json"
+
+            },
+
+            body: JSON.stringify(student)
+
+        })
+
+            .then(response => {
+
+                console.log("Response status:", response.status);
+
+
+                if (!response.ok) {
+
+                    return response.text().then(errorText => {
+
+                        throw new Error(
+                            "Server Error " +
+                            response.status +
+                            ": " +
+                            errorText
+                        );
+
+                    });
+
+                }
+
+
+                return response.json();
+
+            })
+
+            .then(data => {
+
+                console.log("Student saved:", data);
+
+
+                alert(
+                    "Student registered successfully!\n" +
+                    "Student ID: " +
+                    data.id
+                );
+
+
+                /* Clear form */
+
+                clearForm();
+
+
+                /* Reload student table */
+
+                loadStudents();
+
+            })
+
+            .catch(error => {
+
+                console.error(
+                    "Student registration error:",
+                    error
+                );
+
+
+                alert(
+                    "Unable to register student.\n\n" +
+                    "Please make sure:\n" +
+                    "1. Spring Boot is running\n" +
+                    "2. MySQL is running\n" +
+                    "3. Port 8080 is available\n\n" +
+                    "Error: " +
+                    error.message
+                );
+
+            });
+
+    }
+
+
+    /* =========================================
+       LOAD ALL STUDENTS
+    ========================================= */
+
+    function loadStudents() {
+
+        console.log("Loading students...");
+
+
+        fetch(API_URL)
+
+            .then(response => {
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "HTTP Error: " +
+                        response.status
+                    );
+
+                }
+
+                return response.json();
+
+            })
+
+            .then(students => {
+
+                console.log(
+                    "Students received:",
+                    students
+                );
+
+
+                const table =
+                    document.getElementById("studentTable");
+
+
+                table.innerHTML = "";
+
+
+                /* No students */
+
+                if (students.length === 0) {
+
+                    table.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="6"
+                        style="text-align:center;">
+
+                        No students registered yet.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+                    return;
+                }
+
+
+                /* Display students */
+
+                students.forEach(student => {
+
+                    const row =
+                        document.createElement("tr");
+
+
+                    row.innerHTML = `
+
+                <td>
+                    ${student.id}
+                </td>
+
+                <td>
+                    ${student.name}
+                </td>
+
+                <td>
+                    ${student.email}
+                </td>
+
+                <td>
+                    ${student.phone}
+                </td>
+
+                <td>
+                    ${student.department}
+                </td>
+
+                <td>
+                    ${student.year}
+                </td>
+
+            `;
+
+
+                    table.appendChild(row);
+
+                });
+
+            })
+
+            .catch(error => {
+
+                console.error(
+                    "Load students error:",
+                    error
+                );
+
+
+                const table =
+                    document.getElementById("studentTable");
+
+
+                table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    style="text-align:center;">
+
+                    Unable to load students.
+
+                </td>
+
+            </tr>
+
+        `;
+
+            });
+
+    }
+
+
+    /* =========================================
+       CLEAR FORM
+    ========================================= */
+
+    function clearForm() {
+
+        document.getElementById("name").value = "";
+
+        document.getElementById("email").value = "";
+
+        document.getElementById("phone").value = "";
+
+        document.getElementById("department").value = "";
+
+        document.getElementById("year").value = "";
+
+    }
+
+
+    /* =========================================
+       PAGE LOAD
+    ========================================= */
+
+    window.addEventListener("load", function() {
+
+        loadStudents();
+
+    });
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Course Enrollment</title>
+
+    <link rel="stylesheet" href="enrollment.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>Student MS</span>
+        </div>
+
+        <ul class="menu">
+
+            <li onclick="openPage('admin.html')">
+                <i class="fa-solid fa-chart-line"></i>
+                Dashboard
+            </li>
+
+            <li onclick="openPage('student.html')">
+                <i class="fa-solid fa-user-graduate"></i>
+                Students
+            </li>
+
+            <li onclick="openPage('faculty.html')">
+                <i class="fa-solid fa-chalkboard-user"></i>
+                Faculty
+            </li>
+
+            <li onclick="openPage('course.html')">
+                <i class="fa-solid fa-book"></i>
+                Courses
+            </li>
+
+            <li class="active">
+                <i class="fa-solid fa-user-plus"></i>
+                Enrollment
+            </li>
+
+            <li onclick="openPage('attendance.html')">
+                <i class="fa-solid fa-calendar-check"></i>
+                Attendance
+            </li>
+
+            <li onclick="openPage('marks.html')">
+                <i class="fa-solid fa-square-poll-vertical"></i>
+                Marks
+            </li>
+
+            <li onclick="openPage('report.html')">
+                <i class="fa-solid fa-file-lines"></i>
+                Reports
+            </li>
+
+        </ul>
+
+        <div class="logout" onclick="logout()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                <h2>Course Enrollment</h2>
+                <p>Enroll students into courses</p>
+            </div>
+
+            <div class="admin-profile">
+                <i class="fa-solid fa-user-circle"></i>
+                Admin
+            </div>
+
+        </header>
+
+
+        <!-- ENROLLMENT FORM -->
+        <section class="form-card">
+
+            <h3>
+                <i class="fa-solid fa-user-plus"></i>
+                New Enrollment
+            </h3>
+
+            <div class="form-grid">
+
+                <div>
+                    <label>Student ID</label>
+
+                    <input
+                            type="number"
+                            id="studentId"
+                            placeholder="Enter Student ID">
+                </div>
+
+
+                <div>
+                    <label>Course ID</label>
+
+                    <input
+                            type="number"
+                            id="courseId"
+                            placeholder="Enter Course ID">
+                </div>
+
+            </div>
+
+
+            <button class="primary-btn" onclick="enrollStudent()">
+
+                <i class="fa-solid fa-plus"></i>
+                Enroll Student
+
+            </button>
+
+        </section>
+
+
+        <!-- ENROLLMENT LIST -->
+        <section class="table-card">
+
+            <div class="table-header">
+
+                <h3>
+                    <i class="fa-solid fa-list"></i>
+                    Enrollment List
+                </h3>
+
+                <button
+                        class="refresh-btn"
+                        onclick="loadEnrollments()">
+
+                    <i class="fa-solid fa-rotate"></i>
+                    Refresh
+
+                </button>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Student</th>
+                        <th>Course</th>
+                        <th>Enrollment Date</th>
+                        <th>Action</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="enrollmentTable">
+
+                    <tr>
+                        <td colspan="5">
+                            Loading...
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    // ENROLL STUDENT
+    async function enrollStudent() {
+
+        const studentId =
+            document.getElementById("studentId").value;
+
+        const courseId =
+            document.getElementById("courseId").value;
+
+
+        if (studentId === "" || courseId === "") {
+
+            alert("Please enter Student ID and Course ID");
+
+            return;
+        }
+
+
+        try {
+
+            const response = await fetch(
+                `/api/enrollments?studentId=${studentId}&courseId=${courseId}`,
+                {
+                    method: "POST"
+                }
+            );
+
+
+            if (response.ok) {
+
+                alert("Student enrolled successfully!");
+
+                document.getElementById("studentId").value = "";
+                document.getElementById("courseId").value = "";
+
+                loadEnrollments();
+
+            } else {
+
+                const message = await response.text();
+
+                alert("Enrollment failed: " + message);
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Server connection error");
+
+        }
+
+    }
+
+
+    // LOAD ENROLLMENTS
+    async function loadEnrollments() {
+
+        try {
+
+            const response =
+                await fetch("/api/enrollments");
+
+            const enrollments =
+                await response.json();
+
+
+            const table =
+                document.getElementById("enrollmentTable");
+
+            table.innerHTML = "";
+
+
+            if (enrollments.length === 0) {
+
+                table.innerHTML = `
+                    <tr>
+                        <td colspan="5">
+                            No enrollments found
+                        </td>
+                    </tr>
+                `;
+
+                return;
+            }
+
+
+            enrollments.forEach(enrollment => {
+
+                const row =
+                    document.createElement("tr");
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${enrollment.id}
+                    </td>
+
+                    <td>
+                        ${enrollment.student
+                    ? enrollment.student.name
+                    : enrollment.studentId}
+                    </td>
+
+                    <td>
+                        ${enrollment.course
+                    ? enrollment.course.courseName
+                    : enrollment.courseId}
+                    </td>
+
+                    <td>
+                        ${enrollment.enrollmentDate || "-"}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteEnrollment(${enrollment.id})">
+
+                            <i class="fa-solid fa-trash"></i>
+                            Delete
+
+                        </button>
+
+                    </td>
+
+                `;
+
+                table.appendChild(row);
+
+            });
+
+        } catch (error) {
+
+            console.error(error);
+
+            document.getElementById("enrollmentTable").innerHTML = `
+                <tr>
+                    <td colspan="5">
+                        Unable to load enrollments
+                    </td>
+                </tr>
+            `;
+
+        }
+
+    }
+
+
+    // DELETE ENROLLMENT
+    async function deleteEnrollment(id) {
+
+        if (!confirm("Delete this enrollment?")) {
+            return;
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/enrollments/${id}`,
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+
+            if (response.ok) {
+
+                alert("Enrollment deleted!");
+
+                loadEnrollments();
+
+            } else {
+
+                alert("Delete failed");
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Server connection error");
+
+        }
+
+    }
+
+
+    // NAVIGATION
+    function openPage(page) {
+
+        window.location.href = page;
+
+    }
+
+
+    // LOGOUT
+    function logout() {
+
+        window.location.href = "index.html";
+
+    }
+
+
+    // LOAD WHEN PAGE OPENS
+    window.onload = loadEnrollments;
+
+</script>
+
+</body>
+
+</html>

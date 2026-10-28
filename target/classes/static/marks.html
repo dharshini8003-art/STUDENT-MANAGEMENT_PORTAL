@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Marks Management</title>
+
+    <link rel="stylesheet" href="mark.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>Student MS</span>
+        </div>
+
+        <ul class="menu">
+
+            <li onclick="openPage('admin.html')">
+                <i class="fa-solid fa-chart-line"></i>
+                Dashboard
+            </li>
+
+            <li onclick="openPage('student.html')">
+                <i class="fa-solid fa-user-graduate"></i>
+                Students
+            </li>
+
+            <li onclick="openPage('faculty.html')">
+                <i class="fa-solid fa-chalkboard-user"></i>
+                Faculty
+            </li>
+
+            <li onclick="openPage('course.html')">
+                <i class="fa-solid fa-book"></i>
+                Courses
+            </li>
+
+            <li onclick="openPage('enrollment.html')">
+                <i class="fa-solid fa-user-plus"></i>
+                Enrollment
+            </li>
+
+            <li onclick="openPage('attendance.html')">
+                <i class="fa-solid fa-calendar-check"></i>
+                Attendance
+            </li>
+
+            <li class="active">
+                <i class="fa-solid fa-square-poll-vertical"></i>
+                Marks
+            </li>
+
+            <li onclick="openPage('report.html')">
+                <i class="fa-solid fa-file-lines"></i>
+                Reports
+            </li>
+
+        </ul>
+
+        <div class="logout" onclick="logout()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                <h2>Marks Management</h2>
+                <p>Enter and manage student marks</p>
+            </div>
+
+            <div class="admin-profile">
+                <i class="fa-solid fa-user-circle"></i>
+                Admin
+            </div>
+
+        </header>
+
+
+        <!-- MARK ENTRY -->
+        <section class="form-card">
+
+            <h3>
+                <i class="fa-solid fa-pen-to-square"></i>
+                Enter Student Marks
+            </h3>
+
+
+            <div class="form-grid">
+
+                <div>
+
+                    <label>Student ID</label>
+
+                    <input
+                            type="number"
+                            id="studentId"
+                            placeholder="Enter Student ID">
+
+                </div>
+
+
+                <div>
+
+                    <label>Course ID</label>
+
+                    <input
+                            type="number"
+                            id="courseId"
+                            placeholder="Enter Course ID">
+
+                </div>
+
+
+                <div>
+
+                    <label>Internal Mark</label>
+
+                    <input
+                            type="number"
+                            id="internalMark"
+                            placeholder="0 - 40"
+                            min="0"
+                            max="40">
+
+                </div>
+
+
+                <div>
+
+                    <label>External Mark</label>
+
+                    <input
+                            type="number"
+                            id="externalMark"
+                            placeholder="0 - 60"
+                            min="0"
+                            max="60">
+
+                </div>
+
+            </div>
+
+
+            <button
+                    class="primary-btn"
+                    onclick="addMarks()">
+
+                <i class="fa-solid fa-save"></i>
+                Save Marks
+
+            </button>
+
+        </section>
+
+
+        <!-- MARKING INFORMATION -->
+        <section class="mark-info">
+
+            <div class="mark-box">
+
+                <i class="fa-solid fa-file-pen"></i>
+
+                <h4>Internal</h4>
+
+                <p>Maximum: 40 Marks</p>
+
+            </div>
+
+
+            <div class="mark-box">
+
+                <i class="fa-solid fa-file-circle-check"></i>
+
+                <h4>External</h4>
+
+                <p>Maximum: 60 Marks</p>
+
+            </div>
+
+
+            <div class="mark-box">
+
+                <i class="fa-solid fa-calculator"></i>
+
+                <h4>Total</h4>
+
+                <p>Maximum: 100 Marks</p>
+
+            </div>
+
+
+            <div class="mark-box">
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+                <h4>Grade</h4>
+
+                <p>Automatically calculated</p>
+
+            </div>
+
+        </section>
+
+
+        <!-- MARKS TABLE -->
+        <section class="table-card">
+
+            <div class="table-header">
+
+                <h3>
+                    <i class="fa-solid fa-list"></i>
+                    Marks List
+                </h3>
+
+                <button
+                        class="refresh-btn"
+                        onclick="loadMarks()">
+
+                    <i class="fa-solid fa-rotate"></i>
+                    Refresh
+
+                </button>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Student</th>
+                        <th>Course</th>
+                        <th>Internal</th>
+                        <th>External</th>
+                        <th>Total</th>
+                        <th>Grade</th>
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="marksTable">
+
+                    <tr>
+                        <td colspan="7">
+                            Loading...
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+
+    // ADD MARKS
+    async function addMarks() {
+
+        const studentId =
+            document.getElementById("studentId").value;
+
+        const courseId =
+            document.getElementById("courseId").value;
+
+        const internalMark =
+            document.getElementById("internalMark").value;
+
+        const externalMark =
+            document.getElementById("externalMark").value;
+
+
+        if (
+            studentId === "" ||
+            courseId === "" ||
+            internalMark === "" ||
+            externalMark === ""
+        ) {
+
+            alert("Please fill all fields");
+
+            return;
+        }
+
+
+        if (
+            Number(internalMark) < 0 ||
+            Number(internalMark) > 40
+        ) {
+
+            alert("Internal mark must be between 0 and 40");
+
+            return;
+        }
+
+
+        if (
+            Number(externalMark) < 0 ||
+            Number(externalMark) > 60
+        ) {
+
+            alert("External mark must be between 0 and 60");
+
+            return;
+        }
+
+
+        try {
+
+            const response = await fetch(
+                `/api/marks?studentId=${studentId}&courseId=${courseId}&internalMark=${internalMark}&externalMark=${externalMark}`,
+                {
+                    method: "POST"
+                }
+            );
+
+
+            if (response.ok) {
+
+                alert("Marks saved successfully!");
+
+                clearForm();
+
+                loadMarks();
+
+            } else {
+
+                const message =
+                    await response.text();
+
+                alert("Failed: " + message);
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Server connection error");
+
+        }
+
+    }
+
+
+
+    // LOAD MARKS
+    async function loadMarks() {
+
+        try {
+
+            const response =
+                await fetch("/api/marks");
+
+            const marks =
+                await response.json();
+
+
+            const table =
+                document.getElementById("marksTable");
+
+            table.innerHTML = "";
+
+
+            if (marks.length === 0) {
+
+                table.innerHTML = `
+                <tr>
+                    <td colspan="7">
+                        No marks found
+                    </td>
+                </tr>
+            `;
+
+                return;
+            }
+
+
+            marks.forEach(mark => {
+
+                const row =
+                    document.createElement("tr");
+
+
+                row.innerHTML = `
+
+                <td>
+                    ${mark.id}
+                </td>
+
+                <td>
+                    ${mark.student
+                    ? mark.student.name
+                    : "-"}
+                </td>
+
+                <td>
+                    ${mark.course
+                    ? mark.course.courseName
+                    : "-"}
+                </td>
+
+                <td>
+                    ${mark.internalMark}
+                </td>
+
+                <td>
+                    ${mark.externalMark}
+                </td>
+
+                <td>
+                    <strong>
+                        ${mark.total}
+                    </strong>
+                </td>
+
+                <td>
+                    <span class="grade">
+                        ${mark.grade}
+                    </span>
+                </td>
+
+            `;
+
+
+                table.appendChild(row);
+
+            });
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            document.getElementById("marksTable").innerHTML = `
+            <tr>
+                <td colspan="7">
+                    Unable to load marks
+                </td>
+            </tr>
+        `;
+
+        }
+
+    }
+
+
+
+    // CLEAR FORM
+    function clearForm() {
+
+        document.getElementById("studentId").value = "";
+
+        document.getElementById("courseId").value = "";
+
+        document.getElementById("internalMark").value = "";
+
+        document.getElementById("externalMark").value = "";
+
+    }
+
+
+
+    // NAVIGATION
+    function openPage(page) {
+
+        window.location.href = page;
+
+    }
+
+
+
+    // LOGOUT
+    function logout() {
+
+        window.location.href = "index.html";
+
+    }
+
+
+
+    // LOAD DATA
+    window.onload = loadMarks;
+
+</script>
+
+</body>
+</html>

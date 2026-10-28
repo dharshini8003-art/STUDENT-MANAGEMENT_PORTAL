@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Report</title>
+
+    <link rel="stylesheet" href="report.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>Student MS</span>
+        </div>
+
+        <ul class="menu">
+
+            <li onclick="openPage('admin.html')">
+                <i class="fa-solid fa-chart-line"></i>
+                Dashboard
+            </li>
+
+            <li onclick="openPage('student.html')">
+                <i class="fa-solid fa-user-graduate"></i>
+                Students
+            </li>
+
+            <li onclick="openPage('faculty.html')">
+                <i class="fa-solid fa-chalkboard-user"></i>
+                Faculty
+            </li>
+
+            <li onclick="openPage('course.html')">
+                <i class="fa-solid fa-book"></i>
+                Courses
+            </li>
+
+            <li onclick="openPage('enrollment.html')">
+                <i class="fa-solid fa-user-plus"></i>
+                Enrollment
+            </li>
+
+            <li onclick="openPage('attendance.html')">
+                <i class="fa-solid fa-calendar-check"></i>
+                Attendance
+            </li>
+
+            <li onclick="openPage('marks.html')">
+                <i class="fa-solid fa-square-poll-vertical"></i>
+                Marks
+            </li>
+
+            <li class="active">
+                <i class="fa-solid fa-file-lines"></i>
+                Reports
+            </li>
+
+        </ul>
+
+        <div class="logout" onclick="logout()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                <h2>Student Report</h2>
+                <p>View complete student academic report</p>
+            </div>
+
+            <div class="admin-profile">
+                <i class="fa-solid fa-user-circle"></i>
+                Admin
+            </div>
+
+        </header>
+
+
+        <!-- SEARCH -->
+        <section class="form-card">
+
+            <h3>
+                <i class="fa-solid fa-magnifying-glass"></i>
+                Search Student Report
+            </h3>
+
+            <div class="report-search">
+
+                <input
+                        type="number"
+                        id="studentId"
+                        placeholder="Enter Student ID">
+
+                <button
+                        class="primary-btn"
+                        onclick="loadReport()">
+
+                    <i class="fa-solid fa-file-lines"></i>
+                    Generate Report
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- REPORT -->
+        <section id="reportArea" class="report-area">
+
+            <div class="empty-report">
+
+                <i class="fa-solid fa-file-circle-question"></i>
+
+                <h3>No Report Generated</h3>
+
+                <p>
+                    Enter a Student ID above to generate the report.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRINT -->
+        <button
+                id="printButton"
+                class="primary-btn print-btn"
+                onclick="printReport()"
+                style="display:none;">
+
+            <i class="fa-solid fa-print"></i>
+            Print Report
+
+        </button>
+
+    </main>
+
+</div>
+
+
+<script>
+
+
+    // LOAD REPORT
+    async function loadReport() {
+
+        const studentId =
+            document.getElementById("studentId").value;
+
+
+        if (studentId === "") {
+
+            alert("Please enter Student ID");
+
+            return;
+        }
+
+
+        try {
+
+            const response =
+                await fetch(`/api/reports/student/${studentId}`);
+
+
+            if (!response.ok) {
+
+                alert("Student report not found");
+
+                return;
+            }
+
+
+            const report =
+                await response.json();
+
+
+            displayReport(report);
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Server connection error");
+
+        }
+
+    }
+
+
+
+    // DISPLAY REPORT
+    function displayReport(report) {
+
+        const area =
+            document.getElementById("reportArea");
+
+
+        area.innerHTML = `
+
+        <div class="report-card">
+
+            <div class="report-title">
+
+                <div>
+
+                    <i class="fa-solid fa-graduation-cap"></i>
+
+                    <h2>
+                        Student Academic Report
+                    </h2>
+
+                    <p>
+                        Student Management System
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDENT DETAILS -->
+
+            <div class="report-section">
+
+                <h3>
+                    <i class="fa-solid fa-user"></i>
+                    Student Details
+                </h3>
+
+
+                <div class="student-details">
+
+                    <div>
+                        <strong>Student ID</strong>
+                        <span>${report.studentId ?? "-"}</span>
+                    </div>
+
+                    <div>
+                        <strong>Name</strong>
+                        <span>${report.studentName ?? "-"}</span>
+                    </div>
+
+                    <div>
+                        <strong>Email</strong>
+                        <span>${report.email ?? "-"}</span>
+                    </div>
+
+                    <div>
+                        <strong>Department</strong>
+                        <span>${report.department ?? "-"}</span>
+                    </div>
+
+                    <div>
+                        <strong>Year</strong>
+                        <span>${report.year ?? "-"}</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MARKS -->
+
+            <div class="report-section">
+
+                <h3>
+                    <i class="fa-solid fa-square-poll-vertical"></i>
+                    Marks
+                </h3>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Course</th>
+                                <th>Internal</th>
+                                <th>External</th>
+                                <th>Total</th>
+                                <th>Grade</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            ${
+            report.marks
+                ? report.marks.map(mark => `
+
+                                    <tr>
+
+                                        <td>
+                                            ${mark.courseName ?? "-"}
+                                        </td>
+
+                                        <td>
+                                            ${mark.internalMark ?? "-"}
+                                        </td>
+
+                                        <td>
+                                            ${mark.externalMark ?? "-"}
+                                        </td>
+
+                                        <td>
+                                            <strong>
+                                                ${mark.total ?? "-"}
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            <span class="grade">
+                                                ${mark.grade ?? "-"}
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                `).join("")
+                : `
+                                    <tr>
+                                        <td colspan="5">
+                                            No marks available
+                                        </td>
+                                    </tr>
+                                `
+        }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUMMARY -->
+
+            <div class="report-summary">
+
+                <div>
+                    <h4>Total Subjects</h4>
+                    <p>
+                        ${report.marks
+            ? report.marks.length
+            : 0}
+                    </p>
+                </div>
+
+
+                <div>
+                    <h4>Attendance</h4>
+                    <p>
+                        ${report.attendancePercentage ?? "-"}%
+                    </p>
+                </div>
+
+
+                <div>
+                    <h4>Status</h4>
+                    <p>
+                        ${report.status ?? "Active"}
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="report-footer">
+
+                <p>
+                    Generated by Student Management System
+                </p>
+
+            </div>
+
+        </div>
+    `;
+
+
+        document.getElementById("printButton")
+            .style.display = "block";
+
+    }
+
+
+
+    // PRINT REPORT
+    function printReport() {
+
+        window.print();
+
+    }
+
+
+
+    // NAVIGATION
+    function openPage(page) {
+
+        window.location.href = page;
+
+    }
+
+
+
+    // LOGOUT
+    function logout() {
+
+        window.location.href = "index.html";
+
+    }
+
+</script>
+
+</body>
+</html>

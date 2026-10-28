@@ -1,0 +1,420 @@
+/* ================= ADMIN DASHBOARD ================= */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #172b4d;
+}
+
+
+/* LAYOUT */
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 230px;
+
+    background: #1e293b;
+
+    color: white;
+
+    position: fixed;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    z-index: 100;
+}
+
+
+/* BRAND */
+
+.brand {
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding-left: 25px;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+
+.brand i {
+    font-size: 27px;
+}
+
+
+/* MENU */
+
+.menu {
+    list-style: none;
+
+    padding: 15px 10px;
+
+    margin: 0;
+}
+
+
+.menu li {
+    padding: 13px 15px;
+
+    margin: 5px 0;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 14px;
+}
+
+
+.menu li:hover {
+    background: #0879e8;
+}
+
+
+.menu li.active {
+    background: #0879e8;
+}
+
+
+.menu li i {
+    width: 18px;
+}
+
+
+/* LOGOUT */
+
+.logout {
+    position: absolute;
+
+    bottom: 25px;
+
+    left: 25px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 14px;
+}
+
+
+.logout:hover {
+    color: #58b3ff;
+}
+
+
+/* MAIN */
+
+.main-content {
+    margin-left: 230px;
+
+    width: calc(100% - 230px);
+}
+
+
+/* TOPBAR */
+
+.topbar {
+    height: 70px;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 30px;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+
+.menu-icon {
+    font-size: 20px;
+
+    color: #344563;
+}
+
+
+.admin-profile {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    font-weight: bold;
+}
+
+
+.admin-profile i:first-child {
+    color: #0879e8;
+
+    font-size: 27px;
+}
+
+
+.admin-profile i:last-child {
+    font-size: 11px;
+
+    color: #777;
+}
+
+
+/* DASHBOARD */
+
+.dashboard {
+    padding: 35px;
+}
+
+
+.dashboard h1 {
+    margin: 0;
+
+    font-size: 28px;
+}
+
+
+.dashboard-text {
+    color: #778899;
+
+    margin-top: 8px;
+
+    margin-bottom: 30px;
+}
+
+
+/* CARDS */
+
+.dashboard-cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+
+.dashboard-card {
+    min-height: 125px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    padding: 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    box-shadow:
+            0 5px 15px rgba(0,0,0,0.08);
+
+    transition: transform 0.2s;
+}
+
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+}
+
+
+.dashboard-card p {
+    margin: 0 0 7px;
+
+    font-size: 15px;
+}
+
+
+.dashboard-card h2 {
+    margin: 0;
+
+    font-size: 30px;
+}
+
+
+.card-icon {
+    font-size: 38px;
+}
+
+
+/* CARD COLORS */
+
+.blue {
+    background: #0879e8;
+}
+
+
+.green {
+    background: #24b55c;
+}
+
+
+.orange {
+    background: #f6a623;
+}
+
+
+.purple {
+    background: #8256d8;
+}
+
+
+.cyan {
+    background: #12b9c7;
+}
+
+
+.pink {
+    background: #ed4d78;
+}
+
+
+/* QUICK ACTIONS */
+
+.quick-section {
+    background: white;
+
+    margin-top: 30px;
+
+    padding: 25px;
+
+    border-radius: 8px;
+
+    box-shadow:
+            0 3px 12px rgba(0,0,0,0.07);
+}
+
+
+.quick-section h2 {
+    margin-top: 0;
+
+    margin-bottom: 20px;
+
+    font-size: 20px;
+}
+
+
+.quick-actions {
+    display: flex;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+}
+
+
+.quick-actions button {
+    border: none;
+
+    background: #0879e8;
+
+    color: white;
+
+    padding: 12px 18px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+
+.quick-actions button:hover {
+    background: #075fc0;
+}
+
+
+.quick-actions i {
+    margin-right: 7px;
+}
+
+
+/* MOBILE */
+
+@media(max-width: 800px) {
+
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        margin-left: 200px;
+
+        width: calc(100% - 200px);
+    }
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media(max-width: 600px) {
+
+    .sidebar {
+        position: relative;
+
+        width: 100%;
+
+        height: auto;
+    }
+
+    .main-content {
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+    .admin-layout {
+        display: block;
+    }
+
+    .logout {
+        position: static;
+
+        padding: 20px 25px;
+    }
+
+    .dashboard {
+        padding: 20px;
+    }
+
+}

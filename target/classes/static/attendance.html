@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Attendance Management</title>
+
+    <link rel="stylesheet" href="attendance.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>Student MS</span>
+        </div>
+
+        <ul class="menu">
+
+            <li onclick="openPage('admin.html')">
+                <i class="fa-solid fa-chart-line"></i>
+                Dashboard
+            </li>
+
+            <li onclick="openPage('student.html')">
+                <i class="fa-solid fa-user-graduate"></i>
+                Students
+            </li>
+
+            <li onclick="openPage('faculty.html')">
+                <i class="fa-solid fa-chalkboard-user"></i>
+                Faculty
+            </li>
+
+            <li onclick="openPage('course.html')">
+                <i class="fa-solid fa-book"></i>
+                Courses
+            </li>
+
+            <li onclick="openPage('enrollment.html')">
+                <i class="fa-solid fa-user-plus"></i>
+                Enrollment
+            </li>
+
+            <li class="active">
+                <i class="fa-solid fa-calendar-check"></i>
+                Attendance
+            </li>
+
+            <li onclick="openPage('marks.html')">
+                <i class="fa-solid fa-square-poll-vertical"></i>
+                Marks
+            </li>
+
+            <li onclick="openPage('report.html')">
+                <i class="fa-solid fa-file-lines"></i>
+                Reports
+            </li>
+
+        </ul>
+
+        <div class="logout" onclick="logout()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                <h2>Attendance Management</h2>
+                <p>Manage student attendance</p>
+            </div>
+
+            <div class="admin-profile">
+                <i class="fa-solid fa-user-circle"></i>
+                Admin
+            </div>
+
+        </header>
+
+
+        <!-- ATTENDANCE FORM -->
+        <section class="form-card">
+
+            <h3>
+                <i class="fa-solid fa-calendar-plus"></i>
+                Mark Attendance
+            </h3>
+
+
+            <div class="form-grid">
+
+                <!-- STUDENT ID -->
+                <div>
+
+                    <label>Student ID</label>
+
+                    <input
+                            type="number"
+                            id="studentId"
+                            placeholder="Enter Student ID">
+
+                </div>
+
+
+                <!-- COURSE ID -->
+                <div>
+
+                    <label>Course ID</label>
+
+                    <input
+                            type="number"
+                            id="courseId"
+                            placeholder="Enter Course ID">
+
+                </div>
+
+
+                <!-- STATUS -->
+                <div>
+
+                    <label>Attendance Status</label>
+
+                    <select id="status">
+
+                        <option value="PRESENT">
+                            Present
+                        </option>
+
+                        <option value="ABSENT">
+                            Absent
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <button
+                    class="primary-btn"
+                    onclick="markAttendance()">
+
+                <i class="fa-solid fa-check"></i>
+                Mark Attendance
+
+            </button>
+
+        </section>
+
+
+        <!-- ATTENDANCE PERCENTAGE -->
+        <section class="form-card">
+
+            <h3>
+                <i class="fa-solid fa-chart-pie"></i>
+                Check Attendance Percentage
+            </h3>
+
+
+            <div class="form-grid">
+
+                <div>
+
+                    <label>Student ID</label>
+
+                    <input
+                            type="number"
+                            id="percentageStudentId"
+                            placeholder="Student ID">
+
+                </div>
+
+
+                <div>
+
+                    <label>Course ID</label>
+
+                    <input
+                            type="number"
+                            id="percentageCourseId"
+                            placeholder="Course ID">
+
+                </div>
+
+            </div>
+
+
+            <button
+                    class="primary-btn"
+                    onclick="checkPercentage()">
+
+                <i class="fa-solid fa-calculator"></i>
+                Calculate Percentage
+
+            </button>
+
+
+            <div
+                    id="percentageResult"
+                    class="percentage-result">
+
+                Attendance Percentage: --
+
+            </div>
+
+        </section>
+
+
+        <!-- ATTENDANCE TABLE -->
+        <section class="table-card">
+
+            <div class="table-header">
+
+                <h3>
+                    <i class="fa-solid fa-list-check"></i>
+                    Attendance Records
+                </h3>
+
+                <button
+                        class="refresh-btn"
+                        onclick="loadAttendance()">
+
+                    <i class="fa-solid fa-rotate"></i>
+                    Refresh
+
+                </button>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Student</th>
+                        <th>Course</th>
+                        <th>Date</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="attendanceTable">
+
+                    <tr>
+
+                        <td colspan="5">
+                            Loading...
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+
+    // MARK ATTENDANCE
+    async function markAttendance() {
+
+        const studentId =
+            document.getElementById("studentId").value;
+
+        const courseId =
+            document.getElementById("courseId").value;
+
+        const status =
+            document.getElementById("status").value;
+
+
+        if (studentId === "" || courseId === "") {
+
+            alert("Please enter Student ID and Course ID");
+
+            return;
+        }
+
+
+        try {
+
+            const response = await fetch(
+                `/api/attendance?studentId=${studentId}&courseId=${courseId}&status=${status}`,
+                {
+                    method: "POST"
+                }
+            );
+
+
+            if (response.ok) {
+
+                alert("Attendance marked successfully!");
+
+                document.getElementById("studentId").value = "";
+                document.getElementById("courseId").value = "";
+
+                loadAttendance();
+
+            } else {
+
+                const message =
+                    await response.text();
+
+                alert("Failed: " + message);
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Server connection error");
+
+        }
+
+    }
+
+
+
+    // LOAD ATTENDANCE
+    async function loadAttendance() {
+
+        try {
+
+            const response =
+                await fetch("/api/attendance");
+
+            const attendance =
+                await response.json();
+
+
+            const table =
+                document.getElementById("attendanceTable");
+
+            table.innerHTML = "";
+
+
+            if (attendance.length === 0) {
+
+                table.innerHTML = `
+                <tr>
+                    <td colspan="5">
+                        No attendance records found
+                    </td>
+                </tr>
+            `;
+
+                return;
+            }
+
+
+            attendance.forEach(record => {
+
+                const row =
+                    document.createElement("tr");
+
+
+                row.innerHTML = `
+
+                <td>
+                    ${record.id}
+                </td>
+
+                <td>
+                    ${record.student
+                    ? record.student.name
+                    : "-"}
+                </td>
+
+                <td>
+                    ${record.course
+                    ? record.course.courseName
+                    : "-"}
+                </td>
+
+                <td>
+                    ${record.date || "-"}
+                </td>
+
+                <td>
+
+                    <span class="status-${record.status}">
+                        ${record.status}
+                    </span>
+
+                </td>
+
+            `;
+
+
+                table.appendChild(row);
+
+            });
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            document.getElementById("attendanceTable").innerHTML = `
+            <tr>
+                <td colspan="5">
+                    Unable to load attendance
+                </td>
+            </tr>
+        `;
+
+        }
+
+    }
+
+
+
+    // CHECK PERCENTAGE
+    async function checkPercentage() {
+
+        const studentId =
+            document.getElementById(
+                "percentageStudentId"
+            ).value;
+
+        const courseId =
+            document.getElementById(
+                "percentageCourseId"
+            ).value;
+
+
+        if (studentId === "" || courseId === "") {
+
+            alert("Enter Student ID and Course ID");
+
+            return;
+        }
+
+
+        try {
+
+            const response = await fetch(
+                `/api/attendance/percentage?studentId=${studentId}&courseId=${courseId}`
+            );
+
+
+            if (response.ok) {
+
+                const percentage =
+                    await response.text();
+
+
+                document.getElementById(
+                    "percentageResult"
+                ).innerHTML =
+                    `Attendance Percentage: <strong>${percentage}%</strong>`;
+
+            } else {
+
+                alert("Unable to calculate percentage");
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Server connection error");
+
+        }
+
+    }
+
+
+
+    // PAGE NAVIGATION
+    function openPage(page) {
+
+        window.location.href = page;
+
+    }
+
+
+
+    // LOGOUT
+    function logout() {
+
+        window.location.href = "index.html";
+
+    }
+
+
+
+    // LOAD DATA
+    window.onload = loadAttendance;
+
+</script>
+
+</body>
+</html>
